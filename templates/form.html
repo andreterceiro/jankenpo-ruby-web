@@ -1,0 +1,58 @@
+<div>
+    Please click in your option:
+    <hr />
+    <form method="post">
+        <span>
+            <img src='assets/paper.png' class="option" onclick="process('paper')" />
+        </span>
+        <span>
+            <img src='assets/rock.png' class="option" onclick="process('rock')" />
+        </span>
+        <span>
+            <img src='assets/scissors.png' class="option" onclick="process('scissors')" />
+        </span>
+    </form>
+</div>
+<script>
+    /**
+     * Alert who is the winner
+     * user GET parameter choice x computer random choice
+     *
+     * @param {string} userChoice The choice of the user
+     *
+     * @return {null}
+     */
+    function process(userChoice) {
+        if (userChoice != "paper" && userChoice != "rock" && userChoice != "scissors") {
+            alert("Please select your choice.");
+            return;
+        }
+
+        $.post({
+            url: "/evaluate",
+            data: {
+                option: userChoice
+            },
+            success: function(data) {
+                data = JSON.parse(data)
+                alert(data.message)
+            },
+            error: function() {
+                alert("An error ocurred")
+            }
+        })
+    }
+</script>
+
+<script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+    crossorigin="anonymous"></script>
+
+<style>
+    .option {
+        border: 1px solid #000;
+        margin-left: 30px;
+        margin-top: 30px;
+    }
+</style>
