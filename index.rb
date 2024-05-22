@@ -1,5 +1,4 @@
 require "webrick"
-require "erb"
 
 # Class to deal the web requests
 class MyServlet < WEBrick::HTTPServlet::AbstractServlet
@@ -25,7 +24,8 @@ class MyServlet < WEBrick::HTTPServlet::AbstractServlet
 
     # methid related to the POST request
     def do_POST (request, response)
-        if request.body.index("option=").nil? || (request.body.index("option=paper") != 0 && request.body.index("option=rock") != 0 && request.body.index("option=scissors") != 0)
+        puts request.body
+        if request.body != "option=paper" && request.body != "option=rock" && request.body != "option=scissors"
             response.status = "400"
             response.content_type = "text/html"
             response.body = "invalid post" + "\n"
